@@ -1,0 +1,266 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Posts Node App",
+    "description": "Application to manage posts and users"
+  },
+  "host": "localhost:3000",
+  "basePath": "/",
+  "schemes": ["http"],
+  "paths": {
+    "/api/v1/user/register": {
+      "post": {
+        "summary": "Register an user",
+        "tags": ["Endpoints For User Module"],
+        "description": "Allow to register an user",
+        "produces": ["application/json"],
+        "consumes": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "user",
+            "description": "User that we want to register",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/user"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfull operation",
+            "schema": {
+              "$ref": "#/definitions/userCreated"
+            }
+          },
+          "400": {
+            "description": "Invalid values",
+            "schema": {
+              "$ref": "#/definitions/invalidResponse"
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "$ref": "#/definitions/invalidResponse"
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/user/login": {
+      "post": {
+        "summary": "Login an user",
+        "tags": ["Endpoints For User Module"],
+        "description": "Allow to login a user through DB",
+        "produces": ["application/json"],
+        "consumes": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "userLogin",
+            "description": "User email and password",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/userLogin"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfull login",
+            "schema": {
+              "$ref": "#/definitions/loginSuccess"
+            }
+          },
+          "400": {
+            "description": "Invalid values",
+            "schema": {
+              "$ref": "#/definitions/invalidResponse"
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "$ref": "#/definitions/invalidResponse"
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/post/register": {
+      "post": {
+        "summary": "Create a post",
+        "tags": ["Endpoints For Post Module"],
+        "description": "Allow to create a post ",
+        "produces": ["application/json"],
+        "consumes": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "post",
+            "description": "post that we want to create",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/postObject"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfull operation",
+            "schema": {
+              "$ref": "#/definitions/postCreated"
+            }
+          },
+          "400": {
+            "description": "Invalid values",
+            "schema": {
+              "$ref": "#/definitions/invalidResponse"
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "$ref": "#/definitions/invalidResponse"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "userCreated": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "User registered successfully"
+        },
+        "data": {
+          "type": "object",
+          "$ref": "#/definitions/user"
+        }
+      }
+    },
+    "postCreated": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "Post created successfully"
+        },
+        "data": {
+          "type": "object",
+          "$ref": "#/definitions/post"
+        }
+      }
+    },
+    "user": {
+      "type": "object",
+      "properties": {
+        "firstName": {
+          "type": "string",
+          "example": "Felipe"
+        },
+        "lastName": {
+          "type": "string",
+          "example": "Orozco"
+        },
+        "email": {
+          "type": "string",
+          "example": "felipe.orozco@gmail.com"
+        },
+        "password": {
+          "type": "string",
+          "example": "1234felipe"
+        }
+      }
+    },
+    "userLogin": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "example": "felipe.orozco@gmail.com"
+        },
+        "password": {
+          "type": "string",
+          "example": "1234felipe"
+        }
+      }
+    },
+    "invalidResponse": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "Message"
+        }
+      }
+    },
+    "loginSuccess": {
+      "type": "object",
+      "properties":{
+        "message":{
+          "type": "string",
+          "example": "User login successfully"
+        }
+      }
+    },
+    "postObject": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "type": "string",
+          "example": "Post example 1"
+        },
+        "imagePath": {
+          "type": "string",
+          "example": "/path/image.png"
+        },
+        "addedByUserId": {
+          "type": "number",
+          "example": 165
+        }
+      }
+    },
+    "post": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "number",
+          "example": 155
+        },
+        "description": {
+          "type": "string",
+          "example" : "Post example 1"
+        },
+        "imagePath": {
+          "type": "string",
+          "example": "/path/image.png"
+        },
+        "likeCount": {
+          "type": "number",
+          "example": 0
+        },
+        "dislikeCount": {
+          "type": "number",
+          "example": 0
+        },
+        "datetimeCreated": {
+          "type": "string",
+          "example": "2023-02-16 23:22:38"
+        },
+        "addedByUserId": {
+          "type": "number",
+          "example": 165
+        }
+      }
+    }
+  }
+}
